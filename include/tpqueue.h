@@ -1,3 +1,4 @@
+// Copyright 2022 NNTU-CS
 #ifndef INCLUDE_TPQUEUE_H_
 #define INCLUDE_TPQUEUE_H_
 
@@ -9,11 +10,12 @@ class TPQueue {
         Item* next;
     };
     Item *head, *tail;
+
     Item* create(const T& data) {
         Item* item = new Item;
         item->data = data;
         item->next = nullptr;
-      
+     
         return item;
     }
 
@@ -28,21 +30,21 @@ class TPQueue {
 
     void push(const T& data) {
         Item* newItem = create(data);
-
         if (head == nullptr) {
             head = tail = newItem;
-        }
-        else if (data.prior > head->data.prior) {
+        } else if (data.prior > head->data.prior) {
             newItem->next = head;
             head = newItem;
-        }
-        else {
+        } else {
             Item* current = head;
-            while (current->next != nullptr && current->next->data.prior >= data.prior) {
+            while (current->next != nullptr &&
+                   current->next->data.prior >= data.prior) {
                 current = current->next;
             }
+
             newItem->next = current->next;
             current->next = newItem;
+
             if (newItem->next == nullptr) {
                 tail = newItem;
             }
@@ -51,7 +53,7 @@ class TPQueue {
 
     T pop() {
         if (head == nullptr) {
-            return T(); 
+            return T();
         }
 
         Item* temp = head;
